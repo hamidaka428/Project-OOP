@@ -1,21 +1,24 @@
 package bg.tu_varna.sit.f24621651.model;
 
 import bg.tu_varna.sit.f24621651.exception.InvalidTimeException;
+
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Event {
-
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private String name;
     private String note;
 
-    public Event(LocalDate date, LocalTime startTime, LocalTime endTime, String name, String note) throws InvalidTimeException {
+    public Event(LocalDate date, LocalTime startTime, LocalTime endTime, String name, String note)
+            throws InvalidTimeException {
         if (!startTime.isBefore(endTime)) {
             throw new InvalidTimeException("Invalid event time.");
         }
+
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -67,7 +70,12 @@ public class Event {
         if (!date.equals(other.date)) {
             return false;
         }
+
         return startTime.isBefore(other.endTime) && endTime.isAfter(other.startTime);
+    }
+
+    public int getDurationInMinutes() {
+        return (int) Duration.between(startTime, endTime).toMinutes();
     }
 
     @Override

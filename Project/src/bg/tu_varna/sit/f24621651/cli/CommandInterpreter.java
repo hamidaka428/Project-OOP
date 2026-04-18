@@ -2,9 +2,7 @@ package bg.tu_varna.sit.f24621651.cli;
 
 import bg.tu_varna.sit.f24621651.core.CalendarService;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandInterpreter {
 
@@ -146,7 +144,7 @@ public class CommandInterpreter {
                 continue;
             }
 
-            String[] parts = input.split("\\s+");
+            String[] parts = parseInput(input);
             String commandName = parts[0].toLowerCase();
 
             String[] args = new String[parts.length - 1];
@@ -177,6 +175,33 @@ public class CommandInterpreter {
         }
 
         scanner.close();
+    }
+
+    private String[] parseInput(String input) {
+        List<String> tokens = new ArrayList<>();
+        StringBuilder current = new StringBuilder();
+        boolean insideQuotes = false;
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+
+            if (c == '"') {
+                insideQuotes = !insideQuotes;
+            } else if (c == ' ' && !insideQuotes) {
+                if (current.length() > 0) {
+                    tokens.add(current.toString());
+                    current = new StringBuilder();
+                }
+            } else {
+                current.append(c);
+            }
+        }
+
+        if (current.length() > 0) {
+            tokens.add(current.toString());
+        }
+
+        return tokens.toArray(new String[0]);
     }
 
     private void printHelp() {

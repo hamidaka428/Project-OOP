@@ -105,8 +105,8 @@ public class CalendarService {
             return;
         }
 
-        if (args.length < 2) {
-            System.out.println("Usage: book <event> <date> <time>");
+        if (args.length < 5) {
+            System.out.println("Usage: book <date> <starttime> <endtime> <name> <note>");
             return;
         }
 
@@ -115,7 +115,16 @@ public class CalendarService {
             LocalTime startTime = DateTimeParser.parseTime(args[1]);
             LocalTime endTime = DateTimeParser.parseTime(args[2]);
             String name = args[3];
-            String note = args[4];
+
+            StringBuilder noteBuilder = new StringBuilder();
+            for (int i = 4; i < args.length; i++) {
+                if (i > 4) {
+                    noteBuilder.append(" ");
+                }
+                noteBuilder.append(args[i]);
+            }
+            String note = noteBuilder.toString();
+
             calendar.book(date, startTime, endTime, name, note);
             System.out.println("Event booked successfully.");
         } catch (InvalidDateException e) {
@@ -273,16 +282,16 @@ public class CalendarService {
         try {
             LocalDate from = DateTimeParser.parseDate(args[0]);
             LocalDate to = DateTimeParser.parseDate(args[1]);
-            List<LocalDate> busyDays = calendar.busydays(from, to);
+            List<String> busyDays = calendar.busydays(from, to);
 
             if (busyDays.isEmpty()) {
                 System.out.println("No busy days in this range.");
                 return;
             }
 
-            System.out.println("Busiest day(s):");
-            for (LocalDate d : busyDays) {
-                System.out.println(d);
+            System.out.println("Busy days (sorted by hours):");
+            for (String dayInfo : busyDays) {
+                System.out.println(dayInfo);
             }
         } catch (InvalidDateException e) {
             System.out.println("Invalid date: " + e.getMessage());
@@ -364,20 +373,20 @@ public class CalendarService {
             Scanner scanner = new Scanner(System.in);
 
             ConflictResolver resolver = new ConflictResolver() {
-            @Override
-            public boolean resolveConflict(Event currentEvent, Event incomingEvent) {
-                System.out.println("Conflict found:");
-                System.out.println("  Current:  " + currentEvent);
-                System.out.println("  Incoming:  " + incomingEvent);
-                System.out.println("Keep incoming event? (yes/no):");
-                String answer = scanner.nextLine();
-                return answer.equalsIgnoreCase("yes");
-            }
+                @Override
+                public boolean resolveConflict(Event currentEvent, Event incomingEvent) {
+                    System.out.println("Conflict found:");
+                    System.out.println("  Current:  " + currentEvent);
+                    System.out.println("  Incoming:  " + incomingEvent);
+                    System.out.println("Keep incoming event? (yes/no):");
+                    String answer = scanner.nextLine();
+                    return answer.equalsIgnoreCase("yes");
+                }
             };
 
             calendar.merge(other, resolver);
             System.out.println("Calendar merged successfully.");
-    } catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error during merge: " + e.getMessage());
         }
     }

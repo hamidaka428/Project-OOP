@@ -95,9 +95,9 @@ public class Calendar {
         }
     }
 
-    public List<LocalDate> busydays(LocalDate from, LocalDate to) {
-        List<LocalDate> busiestDays = new ArrayList<>();
-        int maxBusyHours = 0;
+    public List<String> busydays(LocalDate from, LocalDate to) {
+        int[] totalMinutesPerDay = new int[7];
+        String[] dayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
         for (Map.Entry<LocalDate, CalendarDay> entry : days.entrySet()) {
             LocalDate currentDate = entry.getKey();
@@ -106,19 +106,43 @@ public class Calendar {
             boolean isBeforeOrEqualTo = currentDate.isBefore(to) || currentDate.equals(to);
 
             if (isAfterOrEqualFrom && isBeforeOrEqualTo) {
-                int currentBusyHours = entry.getValue().getBusyHours();
+                int dayIndex = currentDate.getDayOfWeek().getValue() - 1;
+                int busyMinutes = 0;
+                for (Event event : entry.getValue().getEvents()) {
+                    busyMinutes += event.getDurationInMinutes();
+                }
+                totalMinutesPerDay[dayIndex] += busyMinutes;
+            }
+        }
 
-                if (currentBusyHours > maxBusyHours) {
-                    maxBusyHours = currentBusyHours;
-                    busiestDays.clear();
-                    busiestDays.add(currentDate);
-                } else if (currentBusyHours == maxBusyHours && maxBusyHours > 0) {
-                    busiestDays.add(currentDate);
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            if (totalMinutesPerDay[i] > 0) {
+                indices.add(i);
+            }
+        }
+
+        for (int i = 0; i < indices.size() - 1; i++) {
+            for (int j = i + 1; j < indices.size(); j++) {
+                if (totalMinutesPerDay[indices.get(j)] > totalMinutesPerDay[indices.get(i)]) {
+                    int temp = indices.get(i);
+                    indices.set(i, indices.get(j));
+                    indices.set(j, temp);
                 }
             }
         }
 
-        return busiestDays;
+        List<String> result = new ArrayList<>();
+        for (int index : indices) {
+            int hours = totalMinutesPerDay[index] / 60;
+            int minutes = totalMinutesPerDay[index] % 60;
+            if (minutes > 0) {
+                result.add(dayNames[index] + " - " + hours + "h " + minutes + "min");
+            } else {
+                result.add(dayNames[index] + " - " + hours + "h");
+            }
+        }
+        return result;
     }
 
     private CalendarDay getOrCreateDay(LocalDate date) {
@@ -241,9 +265,9 @@ public class Calendar {
         if (hasEnoughTime(lastEvent.getEndTime(), dayEnd, durationMinutes)) {
             return createSlotIfPossible(lastEvent.getEndTime(), durationMinutes);
         }
-
         return null;
     }
+
 
     private boolean hasEnoughTime(LocalTime startTime, LocalTime endTime, int durationMinutes) {
         return startTime.plusMinutes(durationMinutes).compareTo(endTime) <= 0;
@@ -324,6 +348,14 @@ public class Calendar {
         return day >= 1 && day <= 5;
     }
 
+    public boolean isHolidayDay(LocalDate date) {
+        CalendarDay day = days.get(date);
+        if (day == null) {
+            return false;
+        }
+        return day.isHoliday();
+    }
+
     public LocalDate findslotwith(LocalDate fromDate, int hours, Calendar otherCalendar) {
         if (hours <= 0 || otherCalendar == null) {
             return null;
@@ -341,10 +373,8 @@ public class Calendar {
                     return currentDate;
                 }
             }
-
             currentDate = currentDate.plusDays(1);
         }
-
         return null;
     }
 
@@ -388,4 +418,31 @@ public class Calendar {
 
         return null;
     }
+
+    public Map<LocalDate, List<Event>> getAllEvents() {
+        Map<LocalDate, List<Event>> allEvents = new HashMap<>();
+        for (Map.Entry<LocalDate, CalendarDay> entry : days.entrySet()) {
+            List<Event> events = entry.getValue().getEvents();
+            if (!events.isEmpty()) {
+                allEvents.put(entry.getKey(), events);
+            }
+        }
+        return allEvents;
+    }
+
+    public List<LocalDate> getHolidays() {
+        List<LocalDate> holidays = new ArrayList<>();
+        for (Map.Entry<LocalDate, CalendarDay> entry : days.entrySet()) {
+            if (entry.getValue().isHoliday()) {
+                holidays.add(entry.getKey());
+            }
+        }
+        return holidays;
+    }
+
+    public CalendarDay getDay(LocalDate date) {
+        return days.get(date);
+    }
+
+
 }

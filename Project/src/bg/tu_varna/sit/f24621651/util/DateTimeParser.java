@@ -21,10 +21,10 @@ public final class DateTimeParser {
         if (input == null || input.isBlank()) {
             throw new InvalidDateException("Date cannot be null or empty.");
         }
-         try {
-              return LocalDate.parse(input.strip(), DATE_FORMAT);
+        try {
+            return LocalDate.parse(input.strip(), DATE_FORMAT);
         }
-         catch (DateTimeParseException e) {
+        catch (DateTimeParseException e) {
             throw new InvalidDateException("Invalid date format. Expected yyyy-MM-dd.", e);
         }
     }
@@ -33,10 +33,10 @@ public final class DateTimeParser {
         if (input == null || input.isBlank()) {
             throw new InvalidTimeException("Time cannot be null or empty.");
         }
-         try {
-             return LocalTime.parse(input.strip(), TIME_FORMAT);
+        try {
+            return LocalTime.parse(input.strip(), TIME_FORMAT);
         }
-         catch (DateTimeParseException e) {
+        catch (DateTimeParseException e) {
             throw new InvalidTimeException("Invalid time format. Expected HH:mm.", e);
         }
     }
@@ -45,13 +45,13 @@ public final class DateTimeParser {
         if (date == null) {
             throw new InvalidDateException("Date cannot be null.");
         }
-         return DATE_FORMAT.format(date);
+        return DATE_FORMAT.format(date);
     }
 
     public static String formatTime(LocalTime time) {
         if (time == null) {
             throw new InvalidTimeException("Time cannot be null.");
         }
-         return TIME_FORMAT.format(time);
+        return TIME_FORMAT.format(time);
     }
 }

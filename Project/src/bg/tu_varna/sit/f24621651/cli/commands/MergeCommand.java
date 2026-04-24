@@ -1,0 +1,53 @@
+package bg.tu_varna.sit.f24621651.cli.commands;
+
+import bg.tu_varna.sit.f24621651.cli.Command;
+import bg.tu_varna.sit.f24621651.core.CalendarService;
+import bg.tu_varna.sit.f24621651.model.Calendar;
+import bg.tu_varna.sit.f24621651.model.ConflictResolver;
+import bg.tu_varna.sit.f24621651.model.Event;
+
+import java.util.Scanner;
+
+public class MergeCommand implements Command {
+
+    private final CalendarService service;
+
+    public MergeCommand(CalendarService service) {
+        this.service = service;
+    }
+
+    @Override
+    public void execute(String[] args) {
+        if (!service.isFileOpened()) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
+        if (args.length < 1) {
+            System.out.println("Usage: merge <otherfile>");
+            return;
+        }
+
+        try {
+            Calendar other = service.getFileManager().load(args[0]);
+            final Scanner scanner = new Scanner(System.in);
+
+            ConflictResolver resolver = new ConflictResolver() {
+                @Override
+                public boolean resolveConflict(Event currentEvent, Event incomingEvent) {
+                    System.out.println("Conflict found:");
+                    System.out.println("  Current:  " + currentEvent);
+                    System.out.println("  Incoming: " + incomingEvent);
+                    System.out.println("Keep incoming event? (yes/no):");
+                    String answer = scanner.nextLine();
+                    return answer.equalsIgnoreCase("yes");
+                }
+            };
+
+            service.getCalendar().merge(other, resolver);
+            System.out.println("Calendar merged successfully.");
+        } catch (Exception e) {
+            System.out.println("Error during merge: " + e.getMessage());
+        }
+    }
+}

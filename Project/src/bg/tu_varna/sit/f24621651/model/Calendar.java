@@ -142,6 +142,7 @@ public class Calendar {
                 result.add(dayNames[index] + " - " + hours + "h");
             }
         }
+
         return result;
     }
 
@@ -265,9 +266,9 @@ public class Calendar {
         if (hasEnoughTime(lastEvent.getEndTime(), dayEnd, durationMinutes)) {
             return createSlotIfPossible(lastEvent.getEndTime(), durationMinutes);
         }
+
         return null;
     }
-
 
     private boolean hasEnoughTime(LocalTime startTime, LocalTime endTime, int durationMinutes) {
         return startTime.plusMinutes(durationMinutes).compareTo(endTime) <= 0;
@@ -292,7 +293,8 @@ public class Calendar {
         LocalDate currentDate = fromDate;
 
         for (int checkedDays = 0; checkedDays < 365; checkedDays++) {
-            if (isWorkingDay(currentDate) && hasFreeWorkingSlot(currentDate, durationMinutes)) {
+            if (isWorkingDay(currentDate) && !isHolidayDay(currentDate)
+                    && hasFreeWorkingSlot(currentDate, durationMinutes)) {
                 return currentDate;
             }
 
@@ -365,7 +367,8 @@ public class Calendar {
         LocalDate currentDate = fromDate;
 
         for (int checkedDays = 0; checkedDays < 365; checkedDays++) {
-            if (isWorkingDay(currentDate)) {
+            if (isWorkingDay(currentDate) && !isHolidayDay(currentDate)
+                    && !otherCalendar.isHolidayDay(currentDate)) {
                 boolean freeInThisCalendar = hasFreeWorkingSlot(currentDate, durationMinutes);
                 boolean freeInOtherCalendar = otherCalendar.hasFreeWorkingSlot(currentDate, durationMinutes);
 
@@ -373,8 +376,10 @@ public class Calendar {
                     return currentDate;
                 }
             }
+
             currentDate = currentDate.plusDays(1);
         }
+
         return null;
     }
 
@@ -443,6 +448,4 @@ public class Calendar {
     public CalendarDay getDay(LocalDate date) {
         return days.get(date);
     }
-
-
 }

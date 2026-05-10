@@ -8,14 +8,28 @@ import bg.tu_varna.sit.f24621651.model.Event;
 
 import java.util.Scanner;
 
+/**
+ * Class for merging another calendar into the current one.
+ * Asks the user how to resolve overlapping events.
+ */
 public class MergeCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs a {@code MergeCommand} with the given service.
+     *
+     * @param service the calendar service to update
+     */
     public MergeCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the merge command.
+     *
+     * @param args the command arguments (the file to merge in)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

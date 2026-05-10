@@ -24,12 +24,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Reads commands from the standard input and dispatches them to the
+ * appropriate {@link Command} implementation.
+ */
 public class CommandInterpreter {
 
     private final Map<String, Command> commands;
     private final CalendarService service;
     private boolean running;
 
+    /**
+     * Creates a new interpreter and registers all supported commands.
+     */
     public CommandInterpreter() {
         this.commands = new HashMap<>();
         this.service = new CalendarService();
@@ -37,6 +44,9 @@ public class CommandInterpreter {
         registerCommands();
     }
 
+    /**
+     * Adds all command implementations to the registry.
+     */
     private void registerCommands() {
         commands.put("open", new OpenCommand(service));
         commands.put("close", new CloseCommand(service));
@@ -57,10 +67,16 @@ public class CommandInterpreter {
         commands.put("merge", new MergeCommand(service));
     }
 
+    /**
+     * Stops the input loop on the next iteration.
+     */
     public void stop() {
         this.running = false;
     }
 
+    /**
+     * Runs the read-eval-print loop until {@link #stop()} is called.
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Calendar application started. Type 'help' for available commands.");
@@ -102,6 +118,12 @@ public class CommandInterpreter {
         scanner.close();
     }
 
+    /**
+     * Splits the input line into tokens, keeping double-quoted parts together.
+     *
+     * @param input the raw input line
+     * @return an array of tokens
+     */
     private String[] parseInput(String input) {
         List<String> tokens = new ArrayList<>();
         StringBuilder current = new StringBuilder();

@@ -7,14 +7,27 @@ import bg.tu_varna.sit.f24621651.util.DateTimeParser;
 
 import java.time.LocalDate;
 
+/**
+ * Class for marking a date as a non-working day.
+ */
 public class HolidayCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs a {@code HolidayCommand} with the given service.
+     *
+     * @param service the calendar service to update
+     */
     public HolidayCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the holiday command.
+     *
+     * @param args the command arguments (the date)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

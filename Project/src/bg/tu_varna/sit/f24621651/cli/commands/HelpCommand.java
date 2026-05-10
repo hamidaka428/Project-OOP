@@ -2,8 +2,16 @@ package bg.tu_varna.sit.f24621651.cli.commands;
 
 import bg.tu_varna.sit.f24621651.cli.Command;
 
+/**
+ * Class for printing the list of supported commands.
+ */
 public class HelpCommand implements Command {
 
+    /**
+     * Executes the help command.
+     *
+     * @param args the command arguments (none required here)
+     */
     @Override
     public void execute(String[] args) {
         System.out.println("The following commands are supported:");

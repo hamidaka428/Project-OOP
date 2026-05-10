@@ -7,14 +7,27 @@ import bg.tu_varna.sit.f24621651.util.DateTimeParser;
 
 import java.time.LocalDate;
 
+/**
+ * Class for finding a free slot of given duration in working hours.
+ */
 public class FindslotCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs a {@code FindslotCommand} with the given service.
+     *
+     * @param service the calendar service to read from
+     */
     public FindslotCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the findslot command.
+     *
+     * @param args the command arguments (from date, hours)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

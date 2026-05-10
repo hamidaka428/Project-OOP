@@ -8,14 +8,27 @@ import bg.tu_varna.sit.f24621651.util.DateTimeParser;
 
 import java.time.LocalDate;
 
+/**
+ * Class for finding a common free slot in two calendars.
+ */
 public class FindslotwithCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs a {@code FindslotwithCommand} with the given service.
+     *
+     * @param service the calendar service to read from
+     */
     public FindslotwithCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the findslotwith command.
+     *
+     * @param args the command arguments (from date, hours, other file)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

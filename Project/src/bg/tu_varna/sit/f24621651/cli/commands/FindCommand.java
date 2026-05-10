@@ -6,14 +6,27 @@ import bg.tu_varna.sit.f24621651.model.Event;
 
 import java.util.List;
 
+/**
+ * Class for searching events whose name or note contains a given string.
+ */
 public class FindCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs a {@code FindCommand} with the given service.
+     *
+     * @param service the calendar service to read from
+     */
     public FindCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the find command.
+     *
+     * @param args the command arguments (the search string)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

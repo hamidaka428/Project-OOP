@@ -4,14 +4,27 @@ import bg.tu_varna.sit.f24621651.cli.Command;
 import bg.tu_varna.sit.f24621651.core.CalendarService;
 import bg.tu_varna.sit.f24621651.model.Calendar;
 
+/**
+ * Class for opening a calendar file. Creates a new file if it does not exist.
+ */
 public class OpenCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs an {@code OpenCommand} with the given service.
+     *
+     * @param service the calendar service to update
+     */
     public OpenCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the open command.
+     *
+     * @param args the command arguments (the filename to open)
+     */
     @Override
     public void execute(String[] args) {
         if (args.length < 1) {

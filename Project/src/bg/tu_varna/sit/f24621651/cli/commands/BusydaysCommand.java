@@ -8,14 +8,27 @@ import bg.tu_varna.sit.f24621651.util.DateTimeParser;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Class for printing how busy each day of the week is in a given range.
+ */
 public class BusydaysCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs a {@code BusydaysCommand} with the given service.
+     *
+     * @param service the calendar service to read from
+     */
     public BusydaysCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the busydays command.
+     *
+     * @param args the command arguments (from date, to date)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

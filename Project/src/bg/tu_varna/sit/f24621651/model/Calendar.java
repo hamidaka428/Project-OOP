@@ -12,19 +12,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Core domain model. Stores events grouped by date and implements all
+ * operations required by Project 12 (book, unbook, agenda, change, find,
+ * holiday, busydays, findslot, findslotwith, merge).
+ */
 public class Calendar {
+
     private final Map<LocalDate, CalendarDay> days;
 
+    /**
+     * Constructs an empty calendar with no events and no holidays.
+     */
     public Calendar() {
         this.days = new HashMap<>();
     }
 
-    public void book(LocalDate date, LocalTime startTime, LocalTime endTime, String name, String note) throws InvalidTimeException, HolidayException, EventOverlapException {
+    /**
+     * Books a new event on the given date.
+     *
+     * @param date      the date of the event
+     * @param startTime the start time
+     * @param endTime   the end time
+     * @param name      the name
+     * @param note      the note
+     * @throws InvalidTimeException  if the time interval is invalid
+     * @throws HolidayException      if the day is a holiday
+     * @throws EventOverlapException if the event overlaps an existing one
+     */
+    public void book(LocalDate date, LocalTime startTime, LocalTime endTime, String name, String note)
+            throws InvalidTimeException, HolidayException, EventOverlapException {
         CalendarDay day = getOrCreateDay(date);
         Event event = new Event(date, startTime, endTime, name, note);
         day.addEvent(event);
     }
 
+    /**
+     * Removes an event identified by date, start time and end time.
+     *
+     * @param date      the date
+     * @param startTime the start time
+     * @param endTime   the end time
+     * @throws EventNotFoundException if no matching event exists
+     */
     public void unbook(LocalDate date, LocalTime startTime, LocalTime endTime) throws EventNotFoundException {
         CalendarDay day = days.get(date);
         if (day == null) {
@@ -38,6 +68,12 @@ public class Calendar {
         }
     }
 
+    /**
+     * Returns all events for the given day in chronological order.
+     *
+     * @param date the date
+     * @return a sorted list of events (empty if there are none)
+     */
     public List<Event> agenda(LocalDate date) {
         CalendarDay day = days.get(date);
         if (day == null) {
@@ -47,6 +83,12 @@ public class Calendar {
         return day.getEventsSorted();
     }
 
+    /**
+     * Finds all events whose name or note contains the given substring.
+     *
+     * @param searchedText the substring to search for
+     * @return list of matching events
+     */
     public List<Event> find(String searchedText) {
         List<Event> foundEvents = new ArrayList<>();
 
@@ -64,12 +106,33 @@ public class Calendar {
         return foundEvents;
     }
 
+    /**
+     * Marks the given date as a holiday.
+     *
+     * @param date the date
+     */
     public void holiday(LocalDate date) {
         CalendarDay day = getOrCreateDay(date);
         day.setHoliday(true);
     }
 
-    public void change(LocalDate date, LocalTime startTime, String option, String newValue) throws EventNotFoundException, InvalidTimeException, EventOverlapException, HolidayException {
+    /**
+     * Changes one property of an existing event. Supported options are
+     * {@code date}, {@code starttime}, {@code endtime}, {@code name} and
+     * {@code note}.
+     *
+     * @param date      the current date of the event
+     * @param startTime the current start time of the event
+     * @param option    which property to change
+     * @param newValue  the new value as a string
+     * @throws EventNotFoundException   if no matching event exists
+     * @throws InvalidTimeException     if a new time is invalid
+     * @throws EventOverlapException    if the change would create an overlap
+     * @throws HolidayException         if the new date is a holiday
+     * @throws IllegalArgumentException if the option is not recognised
+     */
+    public void change(LocalDate date, LocalTime startTime, String option, String newValue)
+            throws EventNotFoundException, InvalidTimeException, EventOverlapException, HolidayException {
         CalendarDay day = days.get(date);
         if (day == null) {
             throw new EventNotFoundException("No event found for the given date.");
@@ -95,6 +158,14 @@ public class Calendar {
         }
     }
 
+    /**
+     * Returns the days of the week sorted by total busy hours in the given
+     * range. Days with zero hours are omitted.
+     *
+     * @param from the inclusive lower bound
+     * @param to   the inclusive upper bound
+     * @return list of formatted lines, one per non-empty weekday
+     */
     public List<String> busydays(LocalDate from, LocalDate to) {
         int[] totalMinutesPerDay = new int[7];
         String[] dayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -146,6 +217,13 @@ public class Calendar {
         return result;
     }
 
+    /**
+     * Returns the existing day for {@code date}, or creates a new empty one
+     * if absent.
+     *
+     * @param date the date
+     * @return the day
+     */
     private CalendarDay getOrCreateDay(LocalDate date) {
         CalendarDay day = days.get(date);
         if (day == null) {
@@ -155,6 +233,13 @@ public class Calendar {
         return day;
     }
 
+    /**
+     * Searches the day for an event whose start time matches the given one.
+     *
+     * @param day       the day
+     * @param startTime the start time
+     * @return the matching event, or {@code null}
+     */
     private Event findEventByStart(CalendarDay day, LocalTime startTime) {
         for (Event event : day.getEvents()) {
             if (event.getStartTime().equals(startTime)) {
@@ -164,7 +249,17 @@ public class Calendar {
         return null;
     }
 
-    private void changeStartTime(CalendarDay day, Event event, String newValue) throws InvalidTimeException, EventOverlapException {
+    /**
+     * Changes the start time of an event with rollback on overlap.
+     *
+     * @param day      the day of the event
+     * @param event    the event to update
+     * @param newValue the new start time as a string
+     * @throws InvalidTimeException  if the new time is invalid
+     * @throws EventOverlapException if the change creates an overlap
+     */
+    private void changeStartTime(CalendarDay day, Event event, String newValue)
+            throws InvalidTimeException, EventOverlapException {
         LocalTime newStartTime = LocalTime.parse(newValue);
 
         if (!newStartTime.isBefore(event.getEndTime())) {
@@ -180,7 +275,17 @@ public class Calendar {
         }
     }
 
-    private void changeEndTime(CalendarDay day, Event event, String newValue) throws InvalidTimeException, EventOverlapException {
+    /**
+     * Changes the end time of an event with rollback on overlap.
+     *
+     * @param day      the day of the event
+     * @param event    the event to update
+     * @param newValue the new end time as a string
+     * @throws InvalidTimeException  if the new time is invalid
+     * @throws EventOverlapException if the change creates an overlap
+     */
+    private void changeEndTime(CalendarDay day, Event event, String newValue)
+            throws InvalidTimeException, EventOverlapException {
         LocalTime newEndTime = LocalTime.parse(newValue);
 
         if (!newEndTime.isAfter(event.getStartTime())) {
@@ -196,7 +301,18 @@ public class Calendar {
         }
     }
 
-    private void changeDate(CalendarDay currentDay, Event event, String newValue) throws EventNotFoundException, HolidayException, EventOverlapException {
+    /**
+     * Moves an event to a different date with rollback on holiday or overlap.
+     *
+     * @param currentDay the source day
+     * @param event      the event to move
+     * @param newValue   the new date as a string
+     * @throws EventNotFoundException unused declared exception
+     * @throws HolidayException       if the new date is a holiday
+     * @throws EventOverlapException  if the move creates an overlap
+     */
+    private void changeDate(CalendarDay currentDay, Event event, String newValue)
+            throws EventNotFoundException, HolidayException, EventOverlapException {
         LocalDate oldDate = event.getDate();
         LocalDate newDate = LocalDate.parse(newValue);
 
@@ -223,6 +339,13 @@ public class Calendar {
         }
     }
 
+    /**
+     * Checks whether the event overlaps any other event on the same day.
+     *
+     * @param day          the day
+     * @param changedEvent the event to test
+     * @return {@code true} if there is an overlap with a different event
+     */
     private boolean hasOverlap(CalendarDay day, Event changedEvent) {
         for (Event currentEvent : day.getEvents()) {
             if (currentEvent != changedEvent && currentEvent.isOverlapping(changedEvent)) {
@@ -232,6 +355,13 @@ public class Calendar {
         return false;
     }
 
+    /**
+     * Finds a free interval on the given date with the requested duration.
+     *
+     * @param date            the day
+     * @param durationMinutes the requested duration in minutes
+     * @return a {@code [start, end]} pair, or {@code null} if no slot fits
+     */
     public LocalTime[] findSlotInDay(LocalDate date, int durationMinutes) {
         if (durationMinutes <= 0) {
             return null;
@@ -270,10 +400,26 @@ public class Calendar {
         return null;
     }
 
+    /**
+     * Checks whether the gap from {@code startTime} to {@code endTime} is at
+     * least {@code durationMinutes} minutes long.
+     *
+     * @param startTime       the gap start
+     * @param endTime         the gap end
+     * @param durationMinutes the required duration
+     * @return {@code true} if the gap is large enough
+     */
     private boolean hasEnoughTime(LocalTime startTime, LocalTime endTime, int durationMinutes) {
         return startTime.plusMinutes(durationMinutes).compareTo(endTime) <= 0;
     }
 
+    /**
+     * Builds a {@code [start, end]} pair if the slot fits within the day.
+     *
+     * @param startTime       the start time
+     * @param durationMinutes the duration
+     * @return the slot, or {@code null} if it would overflow
+     */
     private LocalTime[] createSlotIfPossible(LocalTime startTime, int durationMinutes) {
         LocalTime endTime = startTime.plusMinutes(durationMinutes);
 
@@ -284,6 +430,14 @@ public class Calendar {
         return new LocalTime[]{startTime, endTime};
     }
 
+    /**
+     * Finds the first date with a free working-hours slot of the given
+     * duration. The search is limited to 365 days.
+     *
+     * @param fromDate the earliest date to consider
+     * @param hours    the duration in whole hours
+     * @return the first matching date, or {@code null} if none is found
+     */
     public LocalDate findslot(LocalDate fromDate, int hours) {
         if (hours <= 0) {
             return null;
@@ -304,6 +458,14 @@ public class Calendar {
         return null;
     }
 
+    /**
+     * Checks whether the given date has a free interval of
+     * {@code durationMinutes} within working hours (08:00-17:00).
+     *
+     * @param date            the date
+     * @param durationMinutes the required duration
+     * @return {@code true} if a slot exists
+     */
     private boolean hasFreeWorkingSlot(LocalDate date, int durationMinutes) {
         LocalTime workStart = LocalTime.of(8, 0);
         LocalTime workEnd = LocalTime.of(17, 0);
@@ -345,11 +507,23 @@ public class Calendar {
         return hasEnoughTime(currentStart, workEnd, durationMinutes);
     }
 
+    /**
+     * Checks whether the given date is a working day (Monday to Friday).
+     *
+     * @param date the date
+     * @return {@code true} if the date is Monday to Friday
+     */
     private boolean isWorkingDay(LocalDate date) {
         int day = date.getDayOfWeek().getValue();
         return day >= 1 && day <= 5;
     }
 
+    /**
+     * Checks whether the given date is marked as a holiday in this calendar.
+     *
+     * @param date the date
+     * @return {@code true} if the date is a holiday
+     */
     public boolean isHolidayDay(LocalDate date) {
         CalendarDay day = days.get(date);
         if (day == null) {
@@ -358,6 +532,15 @@ public class Calendar {
         return day.isHoliday();
     }
 
+    /**
+     * Finds the first date with a free working-hours slot in both this
+     * calendar and the other one. The search is limited to 365 days.
+     *
+     * @param fromDate      the earliest date to consider
+     * @param hours         the duration in whole hours
+     * @param otherCalendar the second calendar
+     * @return the first matching date, or {@code null}
+     */
     public LocalDate findslotwith(LocalDate fromDate, int hours, Calendar otherCalendar) {
         if (hours <= 0 || otherCalendar == null) {
             return null;
@@ -383,7 +566,19 @@ public class Calendar {
         return null;
     }
 
-    public void merge(Calendar other, ConflictResolver resolver) throws InvalidTimeException, HolidayException, EventOverlapException, EventNotFoundException {
+    /**
+     * Merges another calendar into this one, asking the resolver to settle
+     * any overlaps.
+     *
+     * @param other    the calendar to merge in
+     * @param resolver the strategy used to resolve conflicts
+     * @throws InvalidTimeException   propagated from {@code book}
+     * @throws HolidayException       propagated from {@code book}
+     * @throws EventOverlapException  propagated from {@code book}
+     * @throws EventNotFoundException propagated from {@code unbook}
+     */
+    public void merge(Calendar other, ConflictResolver resolver)
+            throws InvalidTimeException, HolidayException, EventOverlapException, EventNotFoundException {
         for (Map.Entry<LocalDate, CalendarDay> entry : other.days.entrySet()) {
             LocalDate date = entry.getKey();
             CalendarDay otherDay = entry.getValue();
@@ -408,6 +603,13 @@ public class Calendar {
         }
     }
 
+    /**
+     * Finds the first event on the given date that overlaps the incoming one.
+     *
+     * @param date          the date
+     * @param incomingEvent the event to test
+     * @return the conflicting event, or {@code null}
+     */
     private Event findOverlappingEvent(LocalDate date, Event incomingEvent) {
         CalendarDay day = days.get(date);
 
@@ -424,6 +626,12 @@ public class Calendar {
         return null;
     }
 
+    /**
+     * Returns a snapshot of all events grouped by date. Used by the file
+     * manager when saving.
+     *
+     * @return a map of date to event list
+     */
     public Map<LocalDate, List<Event>> getAllEvents() {
         Map<LocalDate, List<Event>> allEvents = new HashMap<>();
         for (Map.Entry<LocalDate, CalendarDay> entry : days.entrySet()) {
@@ -435,6 +643,11 @@ public class Calendar {
         return allEvents;
     }
 
+    /**
+     * Returns the list of dates flagged as holidays.
+     *
+     * @return the list of holiday dates
+     */
     public List<LocalDate> getHolidays() {
         List<LocalDate> holidays = new ArrayList<>();
         for (Map.Entry<LocalDate, CalendarDay> entry : days.entrySet()) {
@@ -445,6 +658,12 @@ public class Calendar {
         return holidays;
     }
 
+    /**
+     * Returns the day for the given date, or {@code null}.
+     *
+     * @param date the date
+     * @return the day, or {@code null} if absent
+     */
     public CalendarDay getDay(LocalDate date) {
         return days.get(date);
     }

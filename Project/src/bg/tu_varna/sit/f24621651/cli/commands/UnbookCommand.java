@@ -10,14 +10,27 @@ import bg.tu_varna.sit.f24621651.util.DateTimeParser;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Class for removing an existing event from the calendar.
+ */
 public class UnbookCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs an {@code UnbookCommand} with the given service.
+     *
+     * @param service the calendar service to update
+     */
     public UnbookCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the unbook command.
+     *
+     * @param args the command arguments (date, start time, end time)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

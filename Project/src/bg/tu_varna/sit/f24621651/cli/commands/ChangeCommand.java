@@ -12,14 +12,27 @@ import bg.tu_varna.sit.f24621651.util.DateTimeParser;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Class for changing a property of an existing event.
+ */
 public class ChangeCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs a {@code ChangeCommand} with the given service.
+     *
+     * @param service the calendar service to update
+     */
     public ChangeCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the change command.
+     *
+     * @param args the command arguments (date, start time, option, new value)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

@@ -9,14 +9,27 @@ import bg.tu_varna.sit.f24621651.util.DateTimeParser;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Class for printing all events for a given day in chronological order.
+ */
 public class AgendaCommand implements Command {
 
     private final CalendarService service;
 
+    /**
+     * Constructs an {@code AgendaCommand} with the given service.
+     *
+     * @param service the calendar service to read from
+     */
     public AgendaCommand(CalendarService service) {
         this.service = service;
     }
 
+    /**
+     * Executes the agenda command.
+     *
+     * @param args the command arguments (the date)
+     */
     @Override
     public void execute(String[] args) {
         if (!service.isFileOpened()) {

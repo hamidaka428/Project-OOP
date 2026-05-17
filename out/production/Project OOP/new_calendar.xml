@@ -1,0 +1,9 @@
+<calendar>
+  <event>
+    <date>2026-05-15</date>
+    <starttime>10:00</starttime>
+    <endtime>11:00</endtime>
+    <name>Initial Meeting</name>
+    <note>First event in the new calendar</note>
+  </event>
+</calendar>

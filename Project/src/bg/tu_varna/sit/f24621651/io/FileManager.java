@@ -83,7 +83,7 @@ public class FileManager {
             LocalDate date = LocalDate.parse(getTagValue(dateLine, "date"), DATE_FORMAT);
             LocalTime startTime = LocalTime.parse(getTagValue(startLine, "starttime"), TIME_FORMAT);
             LocalTime endTime = LocalTime.parse(getTagValue(endLine, "endtime"), TIME_FORMAT);
-            String name = getTagValue(nameLine, "n");
+            String name = getTagValue(nameLine, "name");
             String note = getTagValue(noteLine, "note");
 
             calendar.book(date, startTime, endTime, name, note);

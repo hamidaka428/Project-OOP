@@ -1,0 +1,115 @@
+<calendar>
+  <event>
+    <date>2026-05-04</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-04</date>
+    <starttime>13:00</starttime>
+    <endtime>14:00</endtime>
+    <name>Database Design</name>
+    <note>Design schema for new module</note>
+  </event>
+  <event>
+    <date>2026-05-05</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-05</date>
+    <starttime>14:00</starttime>
+    <endtime>15:30</endtime>
+    <name>Client Call</name>
+    <note>Call with external client about requirements</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>10:00</starttime>
+    <endtime>11:00</endtime>
+    <name>Retrospective</name>
+    <note>Sprint 21 retrospective</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>14:00</starttime>
+    <endtime>15:00</endtime>
+    <name>Pair Programming</name>
+    <note>Work together on the merge algorithm</note>
+  </event>
+  <event>
+    <date>2026-05-11</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-11</date>
+    <starttime>10:00</starttime>
+    <endtime>11:30</endtime>
+    <name>Code Review Session</name>
+    <note>Review PRs from the last sprint</note>
+  </event>
+  <event>
+    <date>2026-05-12</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-12</date>
+    <starttime>10:00</starttime>
+    <endtime>11:00</endtime>
+    <name>Integration Testing</name>
+    <note>Test the integration between modules</note>
+  </event>
+  <event>
+    <date>2026-05-12</date>
+    <starttime>15:00</starttime>
+    <endtime>16:00</endtime>
+    <name>Team Building</name>
+    <note>Informal team activity</note>
+  </event>
+  <event>
+    <date>2026-05-13</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-13</date>
+    <starttime>11:00</starttime>
+    <endtime>12:00</endtime>
+    <name>Deployment Planning</name>
+    <note>Plan deployment steps for release</note>
+  </event>
+  <event>
+    <date>2026-05-14</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-14</date>
+    <starttime>14:00</starttime>
+    <endtime>15:30</endtime>
+    <name>Sprint Planning</name>
+    <note>Plan tasks for Sprint 23</note>
+  </event>
+  <holiday>2026-05-01</holiday>
+</calendar>

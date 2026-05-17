@@ -1,0 +1,93 @@
+<calendar>
+  <event>
+    <date>2026-05-04</date>
+    <starttime>08:00</starttime>
+    <endtime>09:00</endtime>
+    <name>Morning Run</name>
+    <note>5 km run in the park</note>
+  </event>
+  <event>
+    <date>2026-05-05</date>
+    <starttime>08:00</starttime>
+    <endtime>09:00</endtime>
+    <name>Morning Run</name>
+    <note>5 km run in the park</note>
+  </event>
+  <event>
+    <date>2026-05-05</date>
+    <starttime>17:30</starttime>
+    <endtime>19:00</endtime>
+    <name>Football Training</name>
+    <note>Weekly football training with the team</note>
+  </event>
+  <event>
+    <date>2026-05-06</date>
+    <starttime>10:00</starttime>
+    <endtime>11:30</endtime>
+    <name>Gym</name>
+    <note>Strength training</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>08:00</starttime>
+    <endtime>09:00</endtime>
+    <name>Morning Run</name>
+    <note>5 km run in the park</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>16:00</starttime>
+    <endtime>17:00</endtime>
+    <name>Yoga</name>
+    <note>Evening yoga session</note>
+  </event>
+  <event>
+    <date>2026-05-08</date>
+    <starttime>10:00</starttime>
+    <endtime>12:00</endtime>
+    <name>Football Match</name>
+    <note>League match vs FC Varna</note>
+  </event>
+  <event>
+    <date>2026-05-11</date>
+    <starttime>08:00</starttime>
+    <endtime>09:00</endtime>
+    <name>Morning Run</name>
+    <note>5 km run in the park</note>
+  </event>
+  <event>
+    <date>2026-05-12</date>
+    <starttime>17:30</starttime>
+    <endtime>19:00</endtime>
+    <name>Football Training</name>
+    <note>Weekly football training with the team</note>
+  </event>
+  <event>
+    <date>2026-05-13</date>
+    <starttime>08:00</starttime>
+    <endtime>09:00</endtime>
+    <name>Morning Run</name>
+    <note>5 km run in the park</note>
+  </event>
+  <event>
+    <date>2026-05-13</date>
+    <starttime>11:00</starttime>
+    <endtime>12:30</endtime>
+    <name>Swimming</name>
+    <note>Swimming at the university pool</note>
+  </event>
+  <event>
+    <date>2026-05-14</date>
+    <starttime>08:00</starttime>
+    <endtime>09:00</endtime>
+    <name>Morning Run</name>
+    <note>5 km run in the park</note>
+  </event>
+  <event>
+    <date>2026-05-14</date>
+    <starttime>16:00</starttime>
+    <endtime>17:00</endtime>
+    <name>Yoga</name>
+    <note>Evening yoga session</note>
+  </event>
+</calendar>

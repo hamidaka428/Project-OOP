@@ -1,0 +1,151 @@
+<calendar>
+  <event>
+    <date>2026-05-04</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-04</date>
+    <starttime>10:00</starttime>
+    <endtime>11:30</endtime>
+    <name>Sprint Planning</name>
+    <note>Plan tasks for Sprint 22</note>
+  </event>
+  <event>
+    <date>2026-05-04</date>
+    <starttime>14:00</starttime>
+    <endtime>15:00</endtime>
+    <name>Code Review</name>
+    <note>Review PR for calendar module</note>
+  </event>
+  <event>
+    <date>2026-05-05</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-05</date>
+    <starttime>11:00</starttime>
+    <endtime>12:00</endtime>
+    <name>Architecture Review</name>
+    <note>Discuss package structure and SRP</note>
+  </event>
+  <event>
+    <date>2026-05-06</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-06</date>
+    <starttime>13:00</starttime>
+    <endtime>14:30</endtime>
+    <name>Demo</name>
+    <note>Customer demo of calendar features</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>10:00</starttime>
+    <endtime>11:00</endtime>
+    <name>Retrospective</name>
+    <note>Sprint 21 retrospective</note>
+  </event>
+  <event>
+    <date>2026-05-07</date>
+    <starttime>15:00</starttime>
+    <endtime>16:00</endtime>
+    <name>1on1 with Lead</name>
+    <note>Weekly check-in with team lead</note>
+  </event>
+  <event>
+    <date>2026-05-08</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-08</date>
+    <starttime>11:00</starttime>
+    <endtime>12:00</endtime>
+    <name>Testing Session</name>
+    <note>Manual testing of CLI commands</note>
+  </event>
+  <event>
+    <date>2026-05-11</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-11</date>
+    <starttime>14:00</starttime>
+    <endtime>16:00</endtime>
+    <name>Documentation Writing</name>
+    <note>Write chapter 5 of the project documentation</note>
+  </event>
+  <event>
+    <date>2026-05-12</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-12</date>
+    <starttime>10:00</starttime>
+    <endtime>11:00</endtime>
+    <name>Peer Review</name>
+    <note>Review colleague project</note>
+  </event>
+  <event>
+    <date>2026-05-12</date>
+    <starttime>13:00</starttime>
+    <endtime>14:00</endtime>
+    <name>Lunch Meeting</name>
+    <note>Discuss Q3 roadmap over lunch</note>
+  </event>
+  <event>
+    <date>2026-05-13</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-13</date>
+    <starttime>11:00</starttime>
+    <endtime>12:30</endtime>
+    <name>Sprint Review</name>
+    <note>Present completed features to stakeholders</note>
+  </event>
+  <event>
+    <date>2026-05-14</date>
+    <starttime>09:00</starttime>
+    <endtime>09:30</endtime>
+    <name>Standup</name>
+    <note>Daily team sync</note>
+  </event>
+  <event>
+    <date>2026-05-14</date>
+    <starttime>10:30</starttime>
+    <endtime>12:00</endtime>
+    <name>Final Submission Prep</name>
+    <note>Prepare ZIP archive and submit project</note>
+  </event>
+  <holiday>2026-05-01</holiday>
+  <holiday>2026-05-06</holiday>
+</calendar>
